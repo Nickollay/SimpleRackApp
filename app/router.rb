@@ -3,7 +3,7 @@ class Router
     if request.path == '/time' && request.get?
       result = TimeController.new(request: request).time
 
-      [result.status, result.headers, [result.body]]
+      [result.status, {}, [result.body]]
     else
       not_found
     end
@@ -12,6 +12,6 @@ class Router
   private
 
   def not_found(message = 'Not Found')
-    [404, { 'content-type' => 'text/plain' }, [message]]
+    [404, {}, [message]]
   end
 end

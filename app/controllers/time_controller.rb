@@ -24,7 +24,7 @@ class TimeController < BaseController
 
   def unknown_time_format(wrong_params)
     self.status = 400
-    self.body = "Unknown time format #{wrong_params}"
+    self.body = "Unknown time format [#{wrong_params.join(', ')}]"
 
     self
   end
