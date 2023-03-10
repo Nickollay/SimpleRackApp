@@ -1,4 +1,10 @@
-class TimeController < BaseController
+class TimeController
+  attr_accessor :status, :headers, :body
+
+  def initialize(request:)
+    @request = request
+  end
+
   def time
     time_units = params['format']&.delete(' ')&.split(',')
     wrong_params = unknown_params(time_units)
@@ -14,6 +20,10 @@ class TimeController < BaseController
   end
 
   private
+
+  def params
+    @request.params
+  end
 
   def unknown_params(time_units)
     return [] if time_units.nil?

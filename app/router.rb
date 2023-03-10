@@ -1,6 +1,6 @@
 class Router
   def route!(request)
-    if request.path == '/time' && request.get?
+    if request.get?
       result = TimeController.new(request: request).time
 
       [result.status, {}, [result.body]]
