@@ -8,7 +8,6 @@ Returns 'Unknown time format [...]' for not required args of 'format' param.
 
 ## How to start:
 ```
-bundle install
 rakeup
 ```
 open in browser http://127.0.0.1:9292/time
