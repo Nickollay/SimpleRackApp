@@ -12,8 +12,20 @@ class TimeTeller
 
   DEFAULT_FORMAT = '%Y-%m-%d %H:%M:%S'
 
-  def call(time_units)
-    tell(time_units)
+  def call(params)
+    time_units = params['format']&.delete(' ')&.split(',')
+    wrong_params = unknown_params(time_units)
+
+    if wrong_params.empty?
+      success = true
+      body = tell(time_units)
+    else
+      success = false
+
+      body = unknown_time_format(wrong_params)
+    end
+
+    OpenStruct.new(success?: success, body:  body)
   end
 
   private
@@ -41,5 +53,20 @@ class TimeTeller
     format = "#{year_month_day.join('-')} #{hour_min_sec.join(':')}".strip
 
     format
+  end
+
+  def unknown_params(time_units)
+    return [] if time_units.nil?
+    return [] if time_units.empty?
+
+    time_units.reject { |time_unit| required_params.include?(time_unit) }
+  end
+
+  def unknown_time_format(wrong_params)
+    "Unknown time format [#{wrong_params.join(', ')}]"
+  end
+
+  def required_params
+    TimeTeller::TIME_UNITS
   end
 end

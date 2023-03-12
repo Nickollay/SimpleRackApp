@@ -4,6 +4,7 @@ Returns time from `/time` route, also takes param `format=year,month,day,hour,mi
 where you can chose any of `year,month,day,hour,minute,second` and write them in any order.
 
 Returns 'Not Found' for other routs.
+Returns 'Unknown time format [...]' for not required args of 'format' param.
 
 ## How to start:
 ```

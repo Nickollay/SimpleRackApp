@@ -1,9 +1,9 @@
 require 'rack'
-require_relative 'simple_rack_app.rb'
+require_relative 'simple_time_rack_app.rb'
 require 'pry'
 
 ROUTES = {
-  '/time' => SimpleRackApp.new
+  '/time' => SimpleTimeRackApp.new
 }
 
 # use Rack::Reloader, 0

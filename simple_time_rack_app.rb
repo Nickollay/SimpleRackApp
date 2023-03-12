@@ -1,7 +1,7 @@
 app_files_regex = File.expand_path('../app/**/*.rb', __FILE__ )
 Dir.glob(app_files_regex).each { |file_path| require file_path }
 
-class SimpleRackApp
+class SimpleTimeRackApp
   def call(env)
     request = Rack::Request.new(env)
 
@@ -11,6 +11,6 @@ class SimpleRackApp
   private
 
   def handle_route(request)
-    Router.new.route!(request)
+    TimeController.new(request: request).time
   end
 end

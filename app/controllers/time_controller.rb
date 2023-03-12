@@ -6,7 +6,9 @@ class TimeController
   end
 
   def time
-    result = TimeResponceService.new.call(params)
+    return not_found unless @request.get?
+
+    result = TimeTeller.new.call(params)
 
     if result.success?
       self.status = 200
@@ -16,12 +18,16 @@ class TimeController
 
     self.body = result.body
 
-    self
+    [status, {}, [body]]
   end
 
   private
 
   def params
     @request.params
+  end
+
+  def not_found(message = 'Not Found')
+    [404, {}, [message]]
   end
 end
