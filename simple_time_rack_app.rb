@@ -5,12 +5,6 @@ class SimpleTimeRackApp
   def call(env)
     request = Rack::Request.new(env)
 
-    handle_route(request)
-  end
-
-  private
-
-  def handle_route(request)
     TimeController.new(request: request).time
   end
 end
