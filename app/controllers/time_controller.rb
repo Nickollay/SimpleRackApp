@@ -1,20 +1,20 @@
 class TimeController
-  attr_accessor :status, :headers, :body
+  attr_accessor :status, :body
 
   def initialize(request:)
     @request = request
   end
 
   def time
-    time_units = params['format']&.delete(' ')&.split(',')
-    wrong_params = unknown_params(time_units)
+    result = TimeResponceService.new.call(params)
 
-    if wrong_params.empty?
+    if result.success?
       self.status = 200
-      self.body = TimeTeller.new.call(time_units)
     else
-      unknown_time_format(wrong_params)
+      self.status = 400
     end
+
+    self.body = result.body
 
     self
   end
@@ -23,23 +23,5 @@ class TimeController
 
   def params
     @request.params
-  end
-
-  def unknown_params(time_units)
-    return [] if time_units.nil?
-    return [] if time_units.empty?
-
-    time_units.reject { |time_unit| required_params.include?(time_unit) }
-  end
-
-  def unknown_time_format(wrong_params)
-    self.status = 400
-    self.body = "Unknown time format [#{wrong_params.join(', ')}]"
-
-    self
-  end
-
-  def required_params
-    TimeTeller::TIME_UNITS
   end
 end
